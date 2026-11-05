@@ -1,9 +1,18 @@
-# catan-bot: a 2-player Catan agent built on catanatron
+# Catan AI Bot in Python: a 2-Player Settlers of Catan Agent
 
-A strong, fast agent for 2-player Settlers of Catan (no player trading, bank and port trades on, 10
-VP), built on the [catanatron](https://github.com/bcollazo/catanatron) engine. It plays inside a
-tight CPU budget, about **1 s of thinking per game** on one core, and it wins about **4 games in 5**
-against catanatron's `ValueFunctionPlayer`.
+An open-source **Python Catan bot** and game-playing AI for 2-player **Settlers of Catan**. This
+research agent is built on the [catanatron](https://github.com/bcollazo/catanatron) engine and
+combines a hand-built value function, short-horizon planning, a learned opening, and self-play
+tuning. It supports the standard 10-VP rules with no player trading and with bank and port trades
+enabled.
+
+The strongest agent plays within a tight CPU budget—about **1 second of thinking per game** on one
+core—and wins about **4 games in 5** against catanatron's `ValueFunctionPlayer`. The repository also
+includes a reproducible evaluation harness, benchmark bots, experiments, and examples for building
+your own Catan game agent.
+
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
 
 | Agent | vs catanatron `ValueFunctionPlayer` (VF) | vs `AlphaBetaPlayer` depth 2 | Mean CPU / game |
 |---|---|---|---|
@@ -18,7 +27,16 @@ what a player can see (the opponent's unplayed dev cards are resampled).*
 
 ---
 
-## How it works, in one minute
+## What this Catan AI includes
+
+- A fast Python agent for 2-player Settlers of Catan.
+- A value function that scores victory points, production, expansion, ports, resource readiness,
+  development cards, army and road races, and discard risk.
+- Hidden-information handling through one sampled opponent world per decision.
+- Short lookahead for trades, builds, knights, Road Building, and opening settlement placement.
+- Self-play SPSA tuning, reproducible clocked matches, and a bot army for benchmarking.
+
+## How the Catan game-playing AI works
 
 1. **One sampled world per decision.** In 2-player Catan the opponent's resource hand is derivable,
    so the only hidden information is their unplayed dev cards.
@@ -70,7 +88,7 @@ games as a player. See [`docs/STORY.md`](docs/STORY.md) and [`docs/INSIGHTS.md`]
 | [`docs/`](docs/) | [`STORY.md`](docs/STORY.md) (how the bot was built), [`INSIGHTS.md`](docs/INSIGHTS.md) (full results log), [`EXPLAIN_comboop1.md`](docs/EXPLAIN_comboop1.md) (how the strongest bot works), [`results/`](docs/results/) (per-experiment write-ups) |
 | `examples/` | Minimal agents: catanatron's `ValueFunctionPlayer` and a random agent |
 
-## Quick start
+## Quick start: run the Python Catan bot
 
 Use **Python 3.11**. The engine is a pinned catanatron commit, so do not install catanatron from PyPI.
 
@@ -94,7 +112,7 @@ python tools/h2h.py army/comboop1/agent.py army/v5/agent.py 600
 python tools/gauntlet.py army/comboop1/agent.py 400 4 4000000 --skip ab2
 ```
 
-## Writing your own agent
+## Build your own Catan agent
 
 An agent is a folder with an `agent.py` defining:
 
